@@ -1,0 +1,8 @@
+---
+- name: Install DHCP Server
+  apt: pkg=isc-dhcp-server
+
+- name: Configuración DHCP
+  template: src=dhcpd.conf dest=/etc/dhcp/dhcpd.conf
+  notify: Restart DHCP
+

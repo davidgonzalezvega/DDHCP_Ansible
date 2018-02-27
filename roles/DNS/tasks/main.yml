@@ -1,0 +1,16 @@
+---
+- name: Instalar DNS
+  apt: pkg=bind9 state=installed update_cache=true
+ 
+- name: Configuracion del fichero named.conf.local
+  template: src=named.conf.local dest=/etc/bind/named.conf.local
+
+- name: Configuracion de zona directa
+  template: src=zona_directa dest=/etc/bind/
+
+- name: Configuracion de zona Inversa
+  template: src=zona_inversa dest=/etc/bind/
+  notify: Restart Bind9
+
+- name: Modificar /etc/resolv.conf
+  shell: /bin/echo -e "nameserver 192.168.88.10" > /etc/resolv.conf
